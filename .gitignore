@@ -1,0 +1,5 @@
+kubectl/config
+keystores/keystore.p12
+.idea
+kafka-debug-container.iml
+.DS_Store
