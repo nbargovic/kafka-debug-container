@@ -1,4 +1,4 @@
-# kafka-debug
+# kafka-debug-container
 A docker image with debug utils that are handy for diagnosing issues with a CFK install of Confluent Platform.
 
 Pre-built images for linux AMD and ARM are here: https://hub.docker.com/repository/docker/bargovic/kafka-debug
@@ -15,7 +15,8 @@ Pre-built images for linux AMD and ARM are here: https://hub.docker.com/reposito
 * vi
 
 ### How to build and run
-You can re-build the image with your own client properties files and keystore(s)/truststore(s).  Place files you want to load into the container in the `properties/` and `keystores/` directories, and then rebuild.
+You can re-build the image with your own client properties files and keystore(s)/truststore(s).  
+Place the files you want to load into the container in the `properties/` and `keystores/` directories, and then rebuild.
 
 ```
 docker buildx build --platform linux/amd64 -t bargovic/kafka-debug:1.0.2-amd64 .
@@ -44,7 +45,7 @@ curl -s -k -X PUT -H "Content-Type:application/json" https://connect/admin/logge
 curl -s -k -X GET https://connect/admin/loggers/ -u <username>:<password> | jq
 ```
 
-Netcat and nslookup:
+nslookup and netcat:
 ```
 nslookup kafka.fios-router.home
 nc -zv kafka.fios-router.home 9092
