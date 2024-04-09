@@ -8,6 +8,7 @@ Pre-built images for linux AMD and ARM are here: https://hub.docker.com/reposito
 * curl
 * jq
 * [kcat](https://github.com/edenhill/kcat)
+* kubectl
 * netcat
 * netstat
 * nslookup
