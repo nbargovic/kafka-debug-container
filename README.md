@@ -33,7 +33,7 @@ kubectl apply -f debug-pod.yml -n confluent
 ### Example debug commands 
 Apache Kafka CLI:
 ```
-kafka-topics --list --bootstrap-server kafka.fios-router.home:9092 --command-config properties/kafka-client.properties
+kafka-topics.sh --list --bootstrap-server kafka.fios-router.home:9092 --command-config properties/kafka-client.properties
 ```
 
 ksqlDB Shell:

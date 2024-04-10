@@ -15,7 +15,7 @@ RUN mkdir -p /home/appuser/.local/bin
 RUN chown -R appuser:appuser /home/appuser/.local
 RUN mkdir -p /home/appuser/.kube
 RUN chown -R appuser:appuser /home/appuser/.kube
-COPY --chown=appuser --chmod=755 ./kubectl/kubectl /home/appuser/.local/bin/.
+COPY --chown=appuser --chmod=755 ./kubectl/kubectl.amd64 /home/appuser/.local/bin/kubectl
 COPY --chown=appuser --chmod=755 ./kubectl/config /home/appuser/.kube/.
 COPY --chown=appuser --chmod=755 ./kcat-1.7.1/kcat.amd64 /usr/bin/kcat
 
@@ -28,4 +28,6 @@ COPY --chown=appuser --chmod=755 ./keystores /home/appuser/keystores/.
 ENV PATH="${PATH}:/home/appuser/kafka_2.13-3.6.2/bin"
 
 USER appuser
+
+#used to keep pod alive in k8s deployment
 CMD ["sh", "-c", "tail -f /dev/null"]

@@ -27,5 +27,7 @@ CCOPY --chown=appuser --chmod=755 ./keystores /home/appuser/keystores/.
 ENV PATH="${PATH}:/home/appuser/confluent-7.6.0/bin"
 
 USER appuser
+
+#used to keep pod alive in k8s deployment
 CMD ["sh", "-c", "tail -f /dev/null"]
 
