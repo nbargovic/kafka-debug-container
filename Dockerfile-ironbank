@@ -9,7 +9,12 @@ RUN dnf install -y nmap-ncat \
  && dnf install -y jq \
  && dnf install -y openssl-libs
 
-#install micro instead of VIM, less CVEs
+RUN dnf remove -y vim-common \
+ && dnf remove -y vim-enhanced \
+ && dnf remove -y vim-filesystem \
+ && dnf remove -y libpng
+
+#install micro instead of VIM, it has less CVEs
 RUN cd /home/appuser && curl https://getmic.ro | bash
 RUN mv /home/appuser/micro /usr/bin/micro
 
