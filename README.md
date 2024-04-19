@@ -6,6 +6,7 @@ Pre-built images for linux AMD and ARM are here: https://hub.docker.com/reposito
 #### Tools included
 * [Apache Kafka CLI](https://docs.confluent.io/kafka/operations-tools/kafka-tools.html)
 * curl
+* helm
 * jq
 * [kcat](https://github.com/edenhill/kcat)
 * keytool
@@ -21,8 +22,8 @@ You can re-build the image with your own client properties files and keystore(s)
 Place the files you want to load into the container in the `properties/` and `keystores/` directories, and then rebuild.
 
 ```
-docker buildx build --platform linux/amd64 -t bargovic/kafka-debug:1.0.2-amd64 .
-docker run -it bargovic/kafka-debug:1.0.2-amd64 /bin/bash
+docker buildx build --platform linux/amd64 -t bargovic/kafka-debug:1.0.5-amd64 .
+docker run -it bargovic/kafka-debug:1.0.5-amd64 /bin/bash
 ```
 
 ### How to deploy to K8s

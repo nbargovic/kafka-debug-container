@@ -16,8 +16,9 @@ RUN chown -R appuser:appuser /home/appuser/.local
 RUN mkdir -p /home/appuser/.kube
 RUN chown -R appuser:appuser /home/appuser/.kube
 COPY --chown=appuser --chmod=755 ./kubectl/kubectl.amd64 /home/appuser/.local/bin/kubectl
-COPY --chown=appuser --chmod=755 ./kubectl/config /home/appuser/.kube/.
+COPY --chown=appuser --chmod=700 ./kubectl/config /home/appuser/.kube/.
 COPY --chown=appuser --chmod=755 ./kcat-1.7.1/kcat.amd64 /usr/bin/kcat
+COPY --chown=appuser --chmod=755 ./helm-3.1.4/helm.amd64 /usr/bin/helm
 
 WORKDIR /home/appuser
 
