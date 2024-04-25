@@ -1,5 +1,5 @@
 # kafka-debug-container
-A docker image with debug utils that are handy for diagnosing issues with a CFK install of Confluent Platform.
+A docker image with debug utils that are handy for diagnosing issues with a CFK install of Confluent Platform. 
 
 #### Tools included
 * [Apache Kafka CLI](https://docs.confluent.io/kafka/operations-tools/kafka-tools.html)
@@ -18,9 +18,10 @@ A docker image with debug utils that are handy for diagnosing issues with a CFK 
 * vi
 
 ### How to build and run
-You can re-build the image with your own client properties files and keystore(s)/truststore(s).  
-Place the files you want to load into the container in the `properties/` and `keystores/` directories, and then rebuild.
+You can build the image with your own client properties files and keystore(s)/truststore(s).  
+Place the files you want to load into the container in the `properties/` and `keystores/` directories, and then build.
 
+Note: if you want to run kubectl/oc commands you'll also need to supply your own kube config file in `kubectl/config`
 ```
 docker buildx build --platform linux/amd64 -t bargovic/kafka-debug:1.0.7-amd64 .
 docker run -it bargovic/kafka-debug:1.0.7-amd64 /bin/bash
