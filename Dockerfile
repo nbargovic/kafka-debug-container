@@ -19,14 +19,20 @@ COPY --chown=appuser --chmod=755 ./kubectl/kubectl.amd64 /home/appuser/.local/bi
 COPY --chown=appuser --chmod=700 ./kubectl/config /home/appuser/.kube/.
 COPY --chown=appuser --chmod=755 ./kcat-1.7.1/kcat.amd64 /usr/bin/kcat
 COPY --chown=appuser --chmod=755 ./helm-3.1.4/helm.amd64 /usr/bin/helm
+COPY --chown=appuser --chmod=755 ./openshift-client/oc.tar.gz /home/appuser/.
+RUN tar -zxvf /home/appuser/oc.tar.gz
+RUN rm /home/appuser/oc.tar.gz
+RUN mv oc /usr/bin/oc
+RUN chown appuser:appuser /usr/bin/oc
 
 WORKDIR /home/appuser
 
 COPY --chown=appuser --chmod=755 ./kafka_2.13-3.6.2 /home/appuser/kafka_2.13-3.6.2/.
+COPY --chown=appuser --chmod=755 ./ksqldb-cli-7.6.1 /home/appuser/ksqldb-cli-7.6.1/.
 COPY --chown=appuser --chmod=755 ./properties /home/appuser/properties/.
 COPY --chown=appuser --chmod=755 ./keystores /home/appuser/keystores/.
 
-ENV PATH="${PATH}:/home/appuser/kafka_2.13-3.6.2/bin"
+ENV PATH="${PATH}:/home/appuser/kafka_2.13-3.6.2/bin:/home/appuser/ksqldb-cli-7.6.1/bin"
 
 USER appuser
 
