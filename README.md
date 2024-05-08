@@ -17,18 +17,21 @@ A docker image with debug utils that are handy for diagnosing issues with a CFK 
 * oc
 * vi
 
-### How to build and run
+### How to build
 You can build the image with your own client properties files and keystore(s)/truststore(s).  
-Place the files you want to load into the container in the `properties/` and `keystores/` directories, and then build.
+1. Base64 the contents of all keystores, truststores, and kube config (with certs) files.
+<bt>example `cat keystore.p12 | base64`
+2. Insert the base64 contents into `debug-secrets.yml`
+3. Update or insert any client connection properties files into the `properties/` direcctory
+4. Build the container
 
-Note: if you want to run kubectl/oc commands you'll also need to supply your own kube config file in `kubectl/config`
 ```
 docker buildx build --platform linux/amd64 -t bargovic/kafka-debug:1.0.7-amd64 .
-docker run -it bargovic/kafka-debug:1.0.7-amd64 /bin/bash
 ```
 
 ### How to deploy to K8s
 ```
+kubectl apply -f debug-secrets.yaml
 kubectl apply -f debug-pod.yml -n confluent
 ```
 

@@ -1,9 +1,50 @@
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-debug-files
+spec:
+  storageClassName: longhorn
+  persistentVolumeReclaimPolicy: Delete
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-debug-files
+spec:
+  storageClassName: longhorn
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: kafka-debug
 spec:
   containers:
     - name: kafka-debug
-      image: bargovic/kafka-debug:1.0.7-amd64
+      image: bargovic/kafka-debug:1.0.7-arm64
       imagePullPolicy: Always
+      volumeMounts:
+        - name: pvc-debug-files
+          mountPath: "/mnt/data/debug-secrets"
+      lifecycle:
+        postStart:
+          exec:
+            command: [ "/bin/sh", "-c", "cp /mnt/data/debug-secrets/config /home/appuser/.kube/config" ]
+  volumes:
+    - name: pvc-debug-files
+      secret:
+        secretName: debug-secrets
+
+
+
+
