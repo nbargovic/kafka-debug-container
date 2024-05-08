@@ -19,12 +19,11 @@ A docker image with debug utils that are handy for diagnosing issues with a CFK 
 
 ### How to build
 You can build the image with your own client properties files and keystore(s)/truststore(s).  
-1. Base64 the contents of all keystores, truststores, and kube config (with certs) files.
+1. Base64 the contents of all keystores, truststores, and kube config files.
 <bt>example `cat keystore.p12 | base64`
 2. Insert the base64 contents into `debug-secrets.yml`
-3. Update or insert any client connection properties files into the `properties/` direcctory
-4. Build the container
-
+3. Update or insert any client connection properties files into the `properties/` directory
+4. Build the container:
 ```
 docker buildx build --platform linux/amd64 -t bargovic/kafka-debug:1.0.7-amd64 .
 ```
