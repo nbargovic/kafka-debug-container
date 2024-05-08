@@ -24,27 +24,36 @@ spec:
     requests:
       storage: 1Gi
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: kafka-debug
 spec:
-  containers:
-    - name: kafka-debug
-      image: bargovic/kafka-debug:1.0.7-arm64
-      imagePullPolicy: Always
-      volumeMounts:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-debug
+  template:
+    metadata:
+      labels:
+        app: kafka-debug
+    spec:
+      containers:
+      - name: kafak-debug
+        image: bargovic/kafka-debug:1.0.7-arm64
+        volumeMounts:
         - name: pvc-debug-files
           mountPath: "/mnt/data/debug-secrets"
-      lifecycle:
-        postStart:
-          exec:
-            command: [ "/bin/sh", "-c", "cp /mnt/data/debug-secrets/config /home/appuser/.kube/config" ]
-  volumes:
-    - name: pvc-debug-files
-      secret:
-        secretName: debug-secrets
-
+        lifecycle:
+          postStart:
+            exec:
+              command: [ "/bin/sh", "-c", "cp /mnt/data/debug-secrets/config /home/appuser/.kube/config" ]
+      volumes:
+        - name: pvc-debug-files
+          projected:
+            sources:
+              - secret:
+                  name: debug-secrets
 
 
 
