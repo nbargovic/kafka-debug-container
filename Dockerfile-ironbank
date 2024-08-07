@@ -1,4 +1,4 @@
-FROM registry1.dso.mil/ironbank/confluentinc/cp-base-new:latest
+FROM registry1.dso.mil/ironbank/big-bang/base:2.1.0
 
 USER root
 
@@ -6,7 +6,6 @@ RUN dnf update -y
 
 RUN dnf install -y nmap-ncat \
  && dnf install -y bind-utils \
- && dnf install -y jq \
  && dnf install -y openssl-libs
 
 RUN dnf remove -y vim-common \
