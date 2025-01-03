@@ -25,7 +25,7 @@ You can build the image with your own client properties files and keystore(s)/tr
 3. Update or insert any client connection properties files into the `properties/` directory
 4. Build the container:
 ```
-docker buildx build --platform linux/amd64 -t bargovic/kafka-debug:1.0.7-amd64 .
+docker buildx build --platform linux/amd64 -t bargovic/kafka-debug:2.0.0-amd64 .
 ```
 
 ### How to deploy to K8s
