@@ -5,7 +5,7 @@ USER root
 RUN mkdir -p /var/cache/dnf
 RUN microdnf update -y
 
-RUN microdnf install -y java-11-openjdk-headless \
+RUN microdnf install -y java-17-openjdk-headless \
  && microdnf install -y nmap-ncat \
  && microdnf install -y bind-utils \
  && microdnf install -y openssl-libs \
@@ -22,15 +22,11 @@ RUN chown -R base:base /home/base/.local
 
 COPY --chown=base --chmod=755 ./kcat-1.7.1/kcat.amd64 /usr/bin/kcat
 COPY --chown=base --chmod=755 ./helm-3.16.4/helm.amd64 /usr/bin/helm
-COPY --chown=base --chmod=755 ./openshift-client/oc.tar.gz /home/base/.
-RUN tar -zxvf /home/base/oc.tar.gz
-RUN rm /home/base/oc.tar.gz
-RUN mv oc /usr/bin/oc
-RUN chown base:base /usr/bin/oc
-
-RUN microdnf remove -y gzip
-RUN microdnf remove -y tar
-RUN rm -rf /var/cache/dnf
+#COPY --chown=base --chmod=755 ./openshift-client/oc.tar.gz /home/base/.
+#RUN tar -zxvf /home/base/oc.tar.gz
+#RUN rm /home/base/oc.tar.gz
+#RUN mv oc /usr/bin/oc
+#RUN chown base:base /usr/bin/oc
 
 WORKDIR /home/base
 
@@ -38,6 +34,18 @@ COPY --chown=base --chmod=755 ./kafka_2.13-3.8.1 /home/base/kafka_2.13-3.8.1/.
 COPY --chown=base --chmod=755 ./ksqldb-cli-7.8.0 /home/base/ksqldb-cli-7.8.0/.
 
 ENV PATH="${PATH}:/home/base/kafka_2.13-3.8.1/bin:/home/base/ksqldb-cli-7.8.0/bin"
+
+# Copy the entrypoint script into the image
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+
+# Make the entrypoint script executable
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# cleanup
+RUN microdnf clean all
+RUN microdnf remove -y tar
+RUN microdnf remove -y gzip
+RUN rm -rf /var/cache/dnf
 
 USER base
 

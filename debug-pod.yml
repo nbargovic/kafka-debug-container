@@ -3,7 +3,7 @@ kind: PersistentVolume
 metadata:
   name: pv-debug-files
 spec:
-  storageClassName: longhorn
+  storageClassName: gp2
   persistentVolumeReclaimPolicy: Delete
   capacity:
     storage: 1Gi
@@ -17,7 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: pvc-debug-files
 spec:
-  storageClassName: longhorn
+  storageClassName: gp2
   accessModes:
     - ReadWriteOnce
   resources:
@@ -40,20 +40,14 @@ spec:
     spec:
       containers:
       - name: kafak-debug
-        image: bargovic/kafka-debug:1.0.7-arm64
+        image: bargovic/kafka-debug:2.1.1-ironbank
         volumeMounts:
         - name: pvc-debug-files
           mountPath: "/mnt/data/debug-secrets"
-        lifecycle:
-          postStart:
-            exec:
-              command: [ "/bin/sh", "-c", "cp /mnt/data/debug-secrets/config /home/appuser/.kube/config" ]
       volumes:
         - name: pvc-debug-files
-          projected:
-            sources:
-              - secret:
-                  name: debug-secrets
+          persistentVolumeClaim:
+            claimName: pvc-debug-files
 
 
 
